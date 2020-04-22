@@ -1,0 +1,66 @@
+{  "Atari VCS Prods": [
+    {
+      "name": "2600",
+      "group": "Vantage",
+      "info-link": "https://demozoo.org/productions/27605/",
+      "download-link": "https://files.scene.org/get/parties/2004/buenzli04/alternative_demo/vtg_2600.zip",
+      "bin": "2600.bin",
+      "year": 2004,
+      "works-in-javatari": "works great"
+    },
+    {
+      "name": "TOM/JONES",
+      "group": "Trilobit",
+      "info-link": "https://demozoo.org/productions/67764/",
+      "download-link": "https://files.scene.org/get/parties/2007/assembly07/oldskool/demo/tomjones_by_trilobit.zip",
+      "bin": "3lb_tj.bin",
+      "year": 2007,
+      "works-in-javatari": "works great"
+    },
+    {
+      "name": "Chiphead",
+      "group": "Altair",
+      "info-link": "https://demozoo.org/productions/165200/",
+      "download-link": "ftp://fujiology.untergrund.net/users/ltk_tscc/fujiology/VCS/ALTAIR/CHIPHEAD.ZIP",
+      "bin": "CHIPHEAD.BIN",
+      "year": 2016,
+      "works-in-javatari": "works great"
+    },
+    {
+      "name": "chp",
+      "group": "Bunch of Craving Kids",
+      "info-link": "https://demozoo.org/productions/277254/",
+      "download-link": "https://files.scene.org/get/parties/2020/revision20/oldskool-4k-intro/chp.zip",
+      "bin": "chp.bin",
+      "year": 2020,
+      "works-in-javatari": "works but has audio flaws"
+    },
+    {
+      "name": "(core)",
+      "group": "wAMMA & Pers' Wastaiset Produktiot",
+      "info-link": "https://demozoo.org/productions/4264/",
+      "download-link": "https://files.scene.org/get/parties/2007/breakpoint07/wild/%28core%29_by_wamma.zip",
+      "bin": "core.bin",
+      "year": 2007,
+      "works-in-javatari": "works but has audio flaws"
+    },
+    {
+      "name": "aTaRSI",
+      "group": "TRSI & DSS & Crest",
+      "info-link": "https://demozoo.org/productions/80733/",
+      "download-link": "https://files.scene.org/get/parties/2013/nordlicht13/oldschool_demo/atarsi.zip",
+      "bin": "aTaRSI.bin",
+      "year": 2013,
+      "works-in-javatari": "works great"
+    },
+    {
+      "name": "Doctor",
+      "group": "Trilobit",
+      "info-link": "https://demozoo.org/productions/63903/",
+      "download-link": "https://files.scene.org/get/parties/2008/altparty08/demo/doctor.zip",
+      "bin": "3lb_doctor_real.bin",
+      "year": 2008,
+      "works-in-javatari": "some parts work, skips the beginning"
+    }    
+  ]
+}

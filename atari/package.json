@@ -1,0 +1,34 @@
+{
+  "name": "atari-bot",
+  "version": "1.0.0",
+  "description": "Atari Twitter Bot",
+  "main": "index.js",
+  "scripts": {
+    "dbg": "env DEBUG=\"bot\" node index.js",
+    "start": "node index.js",
+    "claudia:init": "claudia create --region eu-central-1 --memory 1024 --name atari-bot-vc --timeout 120 --description 'ATARI EMU' --handler index.handler",
+    "claudia:schedule": "claudia add-scheduled-event --rate \"1 hour\" --name atari-bot-vc-scheduler --event ../empty.json",
+    "claudia:kill": "claudia destroy",
+    "deploy": "claudia update"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neophob/twit-bot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/neophob/twit-bot/issues"
+  },
+  "homepage": "https://github.com/neophob/twit-bot#readme",
+  "dependencies": {
+    "debug": "^4.1.1",
+    "jimp": "^0.10.2",
+    "twit": "^2.2.11"
+  },
+  "files": [
+    "index.js",
+    "lib/*",
+    "rom/*"
+  ]
+}
