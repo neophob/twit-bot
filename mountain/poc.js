@@ -31,42 +31,33 @@ function getName() {
     NAME_POSTFIX[getRandomInt(NAME_POSTFIX.length)];
 }
 
-
 function renderBridgeText(_x, _y, name) {
-	_y -= 00;
-//  _x -= 50;
-  let i = 300;
+  const CNVAS_WIDTH = 500;
+  const CNVAS_HEIGHT = 200;
+  let i = CNVAS_WIDTH;
   let os = document.createElement('canvas');
-  os.width = 300;
-  os.height = 200;
+  os.width = CNVAS_WIDTH;
+  os.height = CNVAS_HEIGHT;
   let octx = os.getContext('2d');
-  octx.clearRect(0, 0, 300, 200);
+  octx.clearRect(0, 0, CNVAS_WIDTH, CNVAS_HEIGHT);
 	octx.textBaseline = 'top';
 	octx.textAlign = 'center';
   octx.font = "32px impact";
   octx.fillStyle = 'black';
-//  context.fillText(name.toUpperCase(),50 + _x, _y - 150);
-  octx.fillText(name.toUpperCase(), 150, 0);
+  octx.fillText(name.toUpperCase(), CNVAS_WIDTH / 2, 0);
 
   // slide and dice
   let dltY = 110 / 64;
   let y = 0;
   let angleSteps = 180 / i;
   while (i--) {
-    y = 200 - 110 * Math.sin(i * angleSteps * Math.PI / 180);
+    y = CNVAS_HEIGHT - 110 * Math.sin(i * angleSteps * Math.PI / 180);
     context.drawImage(os,
     	i, 0, 1, 64,
-      i + _x, 30, 1, y
+      i + _x, _y - 96, 1, y
     );
-   //ctx.drawImage(os,
-     //i, 0, 1, textHeight,
-     //i, h * 0.5 - offsetY / textHeight * y, 1, y);
-
-//  ctx.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
-
   }
 }
-
 
 function getFillPattern() {
   const patternCanvas = document.createElement('canvas');
@@ -106,8 +97,6 @@ function buildMountainModel(dimension) {
   let ydest = 0;
   let xdest = 0;
   let graceSize = dimension / SEGMENTS / 2;
-  let shadowRegion = new Path2D();
-  const reversePath = [];
   const mountainRightSegmentLength = [];
   let flatout = false;
 
@@ -190,6 +179,7 @@ function drawFir(x, y) {
 }
 
 function drawMountain(x, y, model) {
+  //draw outer lines
   context.beginPath();
   context.lineWidth = 8;
 	context.moveTo(x, y);
@@ -198,6 +188,7 @@ function drawMountain(x, y, model) {
   });
 	context.stroke();
 
+	//draw middle mountain part
   context.beginPath();
   context.lineWidth = 5;
   context.moveTo(x + model.middlePoints[0].x, y + model.middlePoints[0].y);
@@ -206,6 +197,7 @@ function drawMountain(x, y, model) {
   });
 	context.stroke();
 
+	//draw shadow
 	let shadowRegion = new Path2D();
   let lastYPos = 0;
   shadowRegion.moveTo(x + model.shadowPoints[0].x, y + model.shadowPoints[0].y);
@@ -218,6 +210,7 @@ function drawMountain(x, y, model) {
   context.fillStyle = getFillPattern();
 	context.fill(shadowRegion);
 
+  //draw way to mountain
   context.lineWidth = 8;
   const x1 = x + 1;
   const y1 = y;
@@ -239,7 +232,7 @@ function drawMountain(x, y, model) {
   for (let n = 0; n < 6; n++) {
 	  drawFir(x1 + getRandomInt(200), y1 + getRandomInt(60));
   }
-  renderBridgeText(x, y, getName())
+  renderBridgeText(0, y + model.middlePoints[0].y, getName())
 }
 
 function getValidMountainModel(dimension) {
@@ -249,25 +242,58 @@ function getValidMountainModel(dimension) {
 	return model;
 }
 
-var my_canvas = document.getElementById('canvas');
-var context = my_canvas.getContext("2d");
+const my_canvas = document.getElementById('canvas');
+const context = my_canvas.getContext("2d");
 
 context.strokeStyle = "black";
 context.lineJoin = "round";
 context.lineCap = "round";
 
+const gradient = context.createRadialGradient(
+  canvas.width/2, canvas.height/2, 350,
+  canvas.width/2, canvas.height/2, 90
+);
+
+gradient.addColorStop(1, '#ff000021');//'red');
+gradient.addColorStop(0.666, '#ffa50021');//'orange');
+gradient.addColorStop(0.333, '#ffff0021');//'yellow');
+gradient.addColorStop(0, '#0000007f');//'white');
+
+// Set the fill style and draw a rectangle
 setInterval(() => {
 	context.clearRect(0, 0, canvas.width, canvas.height);
-	const model1 = getValidMountainModel(175);
+
+  context.fillStyle = gradient;
+  context.fillRect(0, 0, canvas.width, canvas.height);
+
+  const model = getValidMountainModel(175);
+	let mountainRegion = new Path2D();
+  let lastYPos = 0;
+  const x2 = 80 + model.outerShellPoints[ model.outerShellPoints.length -1 ].x;
+  const y2 = 380 + model.outerShellPoints[ model.outerShellPoints.length -1 ].y;
+
+  mountainRegion.moveTo(
+    50 + getRandomInt(15),
+    380 + getRandomInt(15)
+  );
+  for (let i=0; i<model.outerShellPoints.length; i++) {
+  	const entry = model.outerShellPoints[i];
+  	mountainRegion.lineTo(
+      80 + entry.x + getRandomInt(15),
+    	380 + entry.y + getRandomInt(15)
+    );
+  }
+  mountainRegion.lineTo(x2 + getRandomInt(15), y2 + 100 + getRandomInt(15));
+	mountainRegion.closePath();
+  context.fillStyle = [
+    '#ff00007f',
+    '#00ff007f',
+    '#0000ff7f',
+    '#00ffff7f',
+    '#ff00ff7f',
+    '#ffff007f',
+  ][getRandomInt(6)]
+	context.fill(mountainRegion);
+
 	drawMountain(80, 380, model);
-/*	const model2 = getValidMountainModel(100);
-	drawMountain(340, 160, model);
-	const model3 = getValidMountainModel(100);
-	drawMountain(40, 360, model);
-	const model4 = getValidMountainModel(100);
-	drawMountain(340, 360, model);
-	const model5 = getValidMountainModel(100);
-	drawMountain(40, 550, model);
-	const model6 = getValidMountainModel(100);
-	drawMountain(340, 550, model);/**/
 }, 550)
