@@ -29,44 +29,46 @@ function main() {
   gradient.addColorStop(0.333, '#ffff0021');//'yellow');
   gradient.addColorStop(0, '#0000007f');//'white');
 
-    context.fillStyle = gradient;
-    context.fillRect(0, 0, canvas.width, canvas.height);
+  context.fillStyle = '#ffffffff';
+  context.fillRect(0, 0, canvas.width, canvas.height);
 
-    const model = getValidMountainModel(175);
-    let mountainRegion = new Path2D();
-    let lastYPos = 0;
-    const x2 = 80 + model.outerShellPoints[ model.outerShellPoints.length -1 ].x;
-    const y2 = 380 + model.outerShellPoints[ model.outerShellPoints.length -1 ].y;
+  context.fillStyle = gradient;
+  context.fillRect(0, 0, canvas.width, canvas.height);
 
-    mountainRegion.moveTo(
-      50 + getRandomInt(15),
-      380 + getRandomInt(15)
+  const model = getValidMountainModel(175);
+  let mountainRegion = new Path2D();
+  const x2 = 80 + model.outerShellPoints[ model.outerShellPoints.length -1 ].x;
+  const y2 = 380 + model.outerShellPoints[ model.outerShellPoints.length -1 ].y;
+
+  mountainRegion.moveTo(
+    50 + getRandomInt(15),
+    380 + getRandomInt(15)
+  );
+  for (let i=0; i<model.outerShellPoints.length; i++) {
+    const entry = model.outerShellPoints[i];
+    mountainRegion.lineTo(
+      80 + entry.x + getRandomInt(15),
+      380 + entry.y + getRandomInt(15)
     );
-    for (let i=0; i<model.outerShellPoints.length; i++) {
-      const entry = model.outerShellPoints[i];
-      mountainRegion.lineTo(
-        80 + entry.x + getRandomInt(15),
-        380 + entry.y + getRandomInt(15)
-      );
-    }
-    mountainRegion.lineTo(x2 + getRandomInt(15), y2 + 100 + getRandomInt(15));
-    mountainRegion.closePath();
-    const col = [
-      '#ff00007f',
-      '#00ff007f',
-      '#0000ff7f',
-      '#00ffff7f',
-      '#ff00ff7f',
-      '#ffff007f',
-    ][getRandomInt(6)];
-    context.fillStyle = col;
-    context.fill(mountainRegion);
+  }
+  mountainRegion.lineTo(x2 + getRandomInt(15), y2 + 100 + getRandomInt(15));
+  mountainRegion.closePath();
+  const col = [
+    '#ff00007f',
+    '#00ff007f',
+    '#0000ff7f',
+    '#00ffff7f',
+    '#ff00ff7f',
+    '#ffff007f',
+  ][getRandomInt(6)];
+  context.fillStyle = col;
+  context.fill(mountainRegion);
 
-    drawMountain(80, 380, model);
-    renderBridgeText(0, 380 + model.middlePoints[0].y, getName(), col)
+  drawMountain(80, 380, model);
+  renderBridgeText(0, 380 + model.middlePoints[0].y, getName(), col)
 
-    const image = canvas.toBuffer();
-    fs.writeFileSync('aaa.png', image);
+  const image = canvas.toBuffer();
+  fs.writeFileSync('aaa.png', image);
 
 }
 
