@@ -31,7 +31,7 @@ function getName() {
     NAME_POSTFIX[getRandomInt(NAME_POSTFIX.length)];
 }
 
-function renderBridgeText(_x, _y, name) {
+function renderBridgeText(_x, _y, name, color) {
   const CNVAS_WIDTH = 500;
   const CNVAS_HEIGHT = 200;
   let i = CNVAS_WIDTH;
@@ -42,9 +42,12 @@ function renderBridgeText(_x, _y, name) {
   octx.clearRect(0, 0, CNVAS_WIDTH, CNVAS_HEIGHT);
 	octx.textBaseline = 'top';
 	octx.textAlign = 'center';
-  octx.font = "32px impact";
-  octx.fillStyle = 'black';
+  octx.font = "38px impact";
+  octx.fillStyle = color;
+  octx.lineWidth = 2;
+  octx.strokeStyle = 'black';
   octx.fillText(name.toUpperCase(), CNVAS_WIDTH / 2, 0);
+  octx.strokeText(name.toUpperCase(), CNVAS_WIDTH / 2, 0);
 
   // slide and dice
   let dltY = 110 / 64;
@@ -229,10 +232,10 @@ function drawMountain(x, y, model) {
   drawFir(x1 - 20, y1);
   drawFir(x2, y2 + 100);
 
-  for (let n = 0; n < 6; n++) {
+  const nrOfFurs = 5 + getRandomInt(4);
+  for (let n = 0; n < nrOfFurs; n++) {
 	  drawFir(x1 + getRandomInt(200), y1 + getRandomInt(60));
   }
-  renderBridgeText(0, y + model.middlePoints[0].y, getName())
 }
 
 function getValidMountainModel(dimension) {
@@ -285,15 +288,18 @@ setInterval(() => {
   }
   mountainRegion.lineTo(x2 + getRandomInt(15), y2 + 100 + getRandomInt(15));
 	mountainRegion.closePath();
-  context.fillStyle = [
+  const col = [
     '#ff00007f',
     '#00ff007f',
     '#0000ff7f',
     '#00ffff7f',
     '#ff00ff7f',
     '#ffff007f',
-  ][getRandomInt(6)]
+  ][getRandomInt(6)];
+  context.fillStyle = col;
 	context.fill(mountainRegion);
 
 	drawMountain(80, 380, model);
+  renderBridgeText(0, 380 + model.middlePoints[0].y, getName(), col)
+
 }, 550)
