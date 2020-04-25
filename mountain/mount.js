@@ -1,17 +1,14 @@
-const Jimp = require('jimp');
-const twitter = require('./twitter');
-const debug = require('debug')('bot:app');
+const debug = require('debug')('bot:mount');
 const unused = require('canvas-5-polyfill');
 const { registerFont, createCanvas } = require('canvas');
-const fs = require('fs');
 
 let canvas, context;
 
 module.exports = {
-  main,
+  render,
 };
 
-function main() {
+function render() {
   const fontpath = './QuartzoBold-W9lv.ttf';
   debug('register font', fontpath);
   registerFont(fontpath, { family: 'sans-serif' });
@@ -68,12 +65,14 @@ function main() {
   context.fillStyle = col;
   context.fill(mountainRegion);
 
+  const name = getName();
   drawMountain(80, 380, model);
-  renderBridgeText(0, 380 + model.middlePoints[0].y, getName(), col)
+  renderBridgeText(0, 380 + model.middlePoints[0].y, name, col)
 
-  const image = canvas.toBuffer();
-  fs.writeFileSync('aaa.png', image);
-
+  return {
+    imageBuffer: canvas.toBuffer(),
+    name,
+  }
 }
 
 
