@@ -25,12 +25,9 @@
     "canvas": "^2.6.1",
     "canvas-5-polyfill": "^0.1.5",
     "debug": "^4.1.1",
-    "jimp": "^0.10.2",
     "twit": "^2.2.11"
   },
   "files": [
-    "index.js",
-    "lib/*",
-    "rom/*"
+    "*.js"
   ]
 }

@@ -1,7 +1,0 @@
-{
-  "lambda": {
-    "role": "mountain-bot-executor",
-    "name": "mountain-bot",
-    "region": "eu-central-1"
-  }
-}
